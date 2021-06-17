@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BucketOpdracht.Models
 {
     public class ContainerStatusEvent : EventArgs
     {
-        public ContainerStatusEvent(ContainerStatus containerStatus, bool allowOverflow)
+        public ContainerStatusEvent(Bucket bucket, int overflow = 0)
         {
-            ContainerStatus = containerStatus;
-            AllowOverflow = allowOverflow;
+            Bucket = bucket;
+            Overflow = overflow;
         }
 
-        public ContainerStatus ContainerStatus { get; }
-        public bool AllowOverflow { get; }
+        public Bucket Bucket { get; set; }
+        public int Overflow { get; }
     }
 }

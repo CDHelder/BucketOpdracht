@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BucketOpdracht.Models
+﻿namespace BucketOpdracht.Models
 {
     public class OilBarrel : Container
     {
-        public OilBarrel() : base(159)
+        public OilBarrel(bool allowOverflow) : base(159, allowOverflow)
         {
 
         }
-        public OilBarrel(int content) : base(159, content)
+        public OilBarrel(int content, bool allowOverflow) : base(159, content, allowOverflow)
         {
 
         }

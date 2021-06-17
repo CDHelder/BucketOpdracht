@@ -9,9 +9,9 @@ namespace BucketOpdracht
         static void Main(string[] args)
         {
             //Create buckets
-            var bucket1 = new Bucket(BucketSize.Small);
+            var bucket1 = new Bucket(BucketSize.Small, true);
             bucket1.ContainerStatusEvent += ContainerStatusEventHandler;
-            var bucket2 = new Bucket(BucketSize.Small);
+            var bucket2 = new Bucket(BucketSize.Small, true);
             bucket2.ContainerStatusEvent += ContainerStatusEventHandler;
 
             WriteContentAndCapacity(bucket1, bucket2);
@@ -44,7 +44,7 @@ namespace BucketOpdracht
             //Thread.Sleep(2000);
 
             Console.WriteLine("Let's try overflowing the bucket");
-            Console.WriteLine("Firstly we will need to gice bucket1 some more content");
+            Console.WriteLine("Firstly we will need to give bucket1 some more content");
 
             WaitAndClearCMD();
             bucket1.Fill(7);
@@ -62,15 +62,15 @@ namespace BucketOpdracht
 
         public static void ContainerStatusEventHandler(object sender, ContainerStatusEvent e)
         {
-            if (e.ContainerStatus == ContainerStatus.Overflowing)
+            if (e.Bucket.ContainerStatus == ContainerStatus.Overflowing)
             {
-                if (e.AllowOverflow == true)
+                if (e.Bucket.AllowOverflowing == true)
                 {
-                    Console.WriteLine("Container is overflowing and allowed to overflow");
+                    Console.WriteLine($"Bucket is overflowing with amount: {e.Overflow}\n");
                 }
-                else if (e.AllowOverflow == false)
+                else if (e.Bucket.AllowOverflowing == false)
                 {
-                    Console.WriteLine("Container is overflowing and NOT allowed to overflow");
+                    Console.WriteLine("Bucket is not allowed to overflow\n");
                 }
             }
         }
@@ -79,23 +79,20 @@ namespace BucketOpdracht
         {
             Console.WriteLine($"Bucket1 size:                   {bucket1.Capacity}");
             Console.WriteLine($"Bucket1 content:                {bucket1.Content}");
-            if (bucket1.Overflowed != 0
-                || bucket1.ContainerStatus == ContainerStatus.Overflowing
+            if (bucket1.ContainerStatus == ContainerStatus.Overflowing
                 || bucket1.Content == bucket1.Capacity)
             {
                 Console.WriteLine($"Bucket1 Allow overflowing =     {bucket1.AllowOverflowing}");
-                Console.WriteLine($"Bucket1 overflowed amount:      {bucket1.Overflowed}");
             }
             Console.WriteLine("\n");
 
             Console.WriteLine($"Bucket2 size:                   {bucket2.Capacity}");
             Console.WriteLine($"Bucket2 content:                {bucket2.Content}");
-            if (bucket2.Overflowed != 0
-                || bucket2.ContainerStatus == ContainerStatus.Overflowing
+            if (bucket2.ContainerStatus == ContainerStatus.Overflowing
                 || bucket2.Content == bucket2.Capacity)
             {
                 Console.WriteLine($"Bucket2 Allow overflowing =     {bucket2.AllowOverflowing}");
-                Console.WriteLine($"Bucket2 overflowed amount:      {bucket2.Overflowed}");
+
             }
             Console.WriteLine("\n");
         }

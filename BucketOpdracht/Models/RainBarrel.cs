@@ -8,12 +8,12 @@
     }
     public class RainBarrel : Container
     {
-        public RainBarrel(RainBarrelSize size) : base((int)size)
+        public RainBarrel(RainBarrelSize size, bool allowOverflow) : base((int)size, allowOverflow)
         {
 
         }
 
-        public RainBarrel(RainBarrelSize size, int content) : base((int)size, content)
+        public RainBarrel(RainBarrelSize size, int content, bool allowOverflow) : base((int)size, content, allowOverflow)
         {
 
         }
